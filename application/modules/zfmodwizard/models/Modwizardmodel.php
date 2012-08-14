@@ -2,7 +2,7 @@
 
 class Zfmodwizard_Model_Modwizardmodel
 {
-    private $_version = "1.0";
+    private $_version = "1.0.0Beta3";
     
     public function Zfmodwizard_Model_Modwizardmodel()
     {
