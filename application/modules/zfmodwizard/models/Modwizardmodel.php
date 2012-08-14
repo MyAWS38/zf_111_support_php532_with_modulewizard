@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Abdul Malik Ikhsan <samsonasik@gmail.com>
+ */
 class Zfmodwizard_Model_Modwizardmodel
 {
     private $_version = "1.0.0Beta3";
