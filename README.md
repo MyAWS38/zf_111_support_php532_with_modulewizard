@@ -3,8 +3,8 @@ ZfwithModuleWizard
 
 Introduction
 ------------
-
-
+This is a simple application build ini Zend Framework 1.11 and added with MyModuleWizard version 1.0.0Beta3
+You can create modules, install/uninstall, manage role, user, and setting priviledge for your modules.
 
 Installation
 ------------
