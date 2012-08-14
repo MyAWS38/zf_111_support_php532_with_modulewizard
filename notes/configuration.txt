@@ -1,0 +1,14 @@
+AllowEncodedSlashes On
+
+AddHandler zend-enabler-script .php .phtml
+AddType application/x-httpd-php .php .phtml
+
+
+LoadModule ssl_module modules/mod_ssl.so -> openssl
+
+AllowOverride All
+
+date.timezone="Asia/Jakarta"
+
+extension=php_pdo_mysql.dll
+extension=php_pdo_pgsql.dll

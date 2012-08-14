@@ -1,0 +1,45 @@
+<script type="text/javascript" src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/js/modules/modwizard.js"></script>
+<fieldset>
+   <legend>
+        <strong>Module Wizard Version : <?=$this->zfmodwizardinfo?></strong>
+   </legend>
+   <table>
+        <tr>
+            <td>Choose Groupmodule</td>
+            <td>:</td>
+            <td><select name="groupmodule_id" id="groupmodule_id" tipe="input">
+                    <?php foreach($this->gmodule as $key=>$row){ ?>
+                        <option value="<?=$row->groupmodule_id?>"><?=$row->groupmodule_name?> </option>
+                    <?php } ?>
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>Module Name</td>
+            <td>:</td>
+            <td><input type="text" tipe="input" maxlength="30" name="module_name" id="module_name" style="width:250px;" onkeyup="javascript: validatemodname(this);"/> </td>
+        </tr>
+        
+        <tr>
+            <td>Module Title</td>
+            <td>:</td>
+            <td><input type="text" tipe="input" maxlength="100" name="module_title" id="module_title" style="width:250px;"/></td>
+        </tr>
+        
+        <tr>
+            <td>Developer</td>
+            <td>:</td>
+            <td><input type="text" tipe="input" maxlength="70" name="developer" id="developer" style="width:250px;"/></td>
+        </tr>
+        
+        <tr>
+            <td colspan="3"><input tipe="input" type="button" id="process" name="process" value="Process" onmouseover="this.style.cursor='pointer'"/></td>
+        </tr>
+   </table>   
+</fieldset>
+<p/>
+<span class="msg"></span>
+<span class="tryagain" style="display:none;">
+   <a id="tryagain" href="javascript:void(0);">Try Again</a>
+</span>

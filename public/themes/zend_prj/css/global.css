@@ -1,0 +1,79 @@
+body{
+   margin: auto 5px;
+}
+
+#header{
+   height: 135px;
+   background: #e8ecf0;
+}
+
+#footer{
+   background: #666666;
+   height: 79px;
+   text-align: center;
+   line-height: 10px;
+}
+
+#logo{
+   background-image: url(../img/zend-framework.png);
+   height: 187px;
+   width: 185px;
+}
+
+.btn-save{
+   background-image: url(../img/icons/save.gif);
+   background-repeat: no-repeat;
+   padding-left: 15px;
+   font-family: Arial;
+}
+
+.btn-edit{
+   background-image: url(../img/icons/save.gif);
+   background-repeat: no-repeat;
+   padding-left: 15px;
+   font-family: Arial;
+}
+
+.btn-cancel{
+   background-image: url(../img/icons/cancel.png);
+   background-repeat: no-repeat;
+   padding-left: 15px;
+   font-family: Arial;
+}
+
+.btn-add{
+   background-image: url(../img/icons/add.png);
+   background-repeat: no-repeat;
+   padding-left: 15px;
+   font-family: Arial;
+}
+
+.paginationControl{
+    
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+#msg{
+    color: tomato;
+    text-decoration: blink;
+    font-style: italic;
+}
+
+#data table{
+    border: 1px solid #ccc;
+}
+
+#data table th{
+    background: #e8ecf0;
+}
+
+.data-genap{
+    background: wheat;
+}
+
+.vcenter{
+    vertical-align: middle;
+}

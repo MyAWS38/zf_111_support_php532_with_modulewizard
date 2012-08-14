@@ -1,0 +1,65 @@
+<script type="text/javascript">
+function setPriv()
+{
+    var guser = '<?=$this->role?>';
+    var listmodid = "";
+    var listmodules = "";
+    var listaccess = "";
+    
+    <?php foreach($this->listmodule as $key=>$row){ ?>
+        listaccess  += $('input[name=access_type_<?=$key?>]:checked').val()+"," ;
+        listmodules += '<?=$row['module']->module_name?>,';
+        listmodid += '<?=$row['module']->module_id?>,';
+    <?php } ?>
+    
+    $("#proc_setpriv").fadeIn("slow");
+    $("#proc_setpriv").html("<font color=red>Process...</font>");
+    $.post(base_url+'/zfpriv/index/updatepriv',{ role_id : guser, listaccess : listaccess,listmodules:listmodules,listmodid:listmodid },
+        function(data){
+       /*  $("#proc_setpriv").html('<font color=red>Privilege Updated Successfully</font>');
+        $("#proc_setpriv").fadeTo(900,1);
+        $("#proc_setpriv").fadeOut("slow");   */
+       
+        window.location.reload(false);
+       
+    });        
+}
+</script>
+<table border=1 cellpadding=0 cellspacing=0>
+        <tr>
+            <th rowspan="2">GroupModule -> Module </th>            
+            <th rowspan="2">Module Title</th>            
+            <th colspan="6">Access Type</th>
+        </tr>
+        
+        <tr>
+            <?php foreach($this->access as $keyac=>$rowac){ ?>
+                <td><?=ucfirst($rowac)?></td>
+            <?php } ?>
+        </tr>        
+        
+        <?php  $gmodule = ""; $i = -1;  foreach($this->listmodule as $key=>$row){ $i++; ?>
+            <?php if ($gmodule != $row['groupmodule'][0]['groupmodule_id']){ ?>
+                <tr>
+                    <td colspan="8"> <I><?=$row['groupmodule'][0]['groupmodule_name']?> </I> </td>
+                </tr>        
+            <?php } $gmodule = $row['groupmodule'][0]['groupmodule_id']; ?>           
+            <tr>
+                <td>&nbsp;&nbsp;<img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/arrow2.png"?>">
+                        &nbsp; <a href="<?=$this->baseUrl()?>/<?=$row['module']->module_name?>" target="_blank"><?=$row['module']->module_name?></a></td>
+                <td><?=$row['module']->module_title?></td>
+              
+                <?php if ($row['module']->is_active==1){   foreach($this->access as $keyac=>$rowac){ ?>
+                    <td><input  <?php if ($rowac=='deny' && $this->role==$this->rolesession && $row['module']->module_name == Zend_Registry::get('module')) { echo "disabled=disabled"; } ?>  type="radio" tipe="setcheck" class="access_type" name="access_type_<?=$key?>" value="<?=$rowac?>"
+                            <?php if ($this->access_type[$key]==$rowac) echo "checked"; ?> ></td>
+                <?php  } } else {  ?>
+                    <td colspan="<?=count($this->access)?>"><b><font color=red>Module Not already Installed</font></b></td>
+                <?php } ?>                
+            </tr>  
+        <? } ?>
+        
+  </table>
+<p>
+    <input type="button" id="setpriv" name="setpriv" value="Set Privileges" onclick="setPriv();"/> <span id="proc_setpriv"></span>
+</p>
+</form>

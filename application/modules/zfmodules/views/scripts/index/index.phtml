@@ -1,0 +1,69 @@
+<script type="text/javascript" src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/js/modules/modules.js"></script>
+zf_modules module
+<hr>
+<hr> <?=$this->message?>
+  <table border=1 cellpadding=0 cellspacing=0>
+        <tr>
+            <th>GroupModule -> Module </th>            
+            <th>Module Title</th>            
+            <th>Status</th>
+            <th>Is valid ? </th>
+            <th>Action</th>
+        </tr>
+        
+        <?php  $gmodule = ""; $i = -1;  foreach($this->listmodule as $key=>$row){ $i++; ?>
+            <?php if ($gmodule != $row['groupmodule'][0]['groupmodule_id']){ ?>
+                <tr>
+                    <td colspan="5"> <I><?=$row['groupmodule'][0]['groupmodule_name']?> </I> </td>
+                </tr>        
+            <?php } $gmodule = $row['groupmodule'][0]['groupmodule_id']; ?>           
+            <tr>
+                <td>&nbsp;&nbsp;<img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/arrow2.png"?>">
+                        &nbsp; <a href="<?=$this->baseUrl()?>/<?=$row['module']->module_name?>" target="_blank"><?=$row['module']->module_name?></a></td>
+                <td><?=$row['module']->module_title?></td>
+                <td><img src="<?=($row['module']->is_active==1)
+                        ? $this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/active.gif"
+                        : $this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/non-active.gif"  ?>"
+                    title="<?=($row['module']->is_active==1) ? "Active" : "Not Active"?>"    
+                    ></td>
+                
+                <td align="center">
+                    <?php $jpgvaliditymodule =  ($row['validitymodule']==1)  ?  "valid.jpg" : "notvalid.jpg";  ?>
+                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/<?=$jpgvaliditymodule?>"> </td>
+                
+                <td align="center">
+                 <?php if ($row['module']->is_core!=1){ ?>
+                        <?php if ($row['validitymoduleOninstall']==1) { ?>                    
+                            <img src="<?=($row['module']->is_active==1) ? $this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/ico_uninstall.jpg"
+                                    : $this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/ico_install.png" ?>"
+                                    onmouseover="this.style.cursor='pointer'" title="<?=($row['module']->is_active==1) ? "Uninstall" : "Install" ?>"
+                                    onclick="javascript:<?php if ($row['validitymodule']==1){  ?> installthis('<?=$row['module']->module_id?>')<?php } else { ?>installnotvalidthis('<?=$row['module']->module_id?>')<?php } ?>;"  
+                                        />
+                         <?php } ?>       
+                            <?php if ($row['module']->is_active == 0){ ?>
+                               <a href="<?=$this->baseUrl()?>/zfmodules/index/removemodule/module_name/<?=$row['module']->module_name?>"
+                                onclick="return confirm('Are You Sure ?')">
+                                    <img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/trash.jpg"?>"
+                                        title="Remove" onmouseover="this.style.cursor='pointer'" border="no">
+                                </a>
+                            <?php } ?>                            
+                <?php } else { ?>
+                    <img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/core.gif"?>"
+                            title="Core Module" onmouseover="this.style.cursor='pointer'">
+                 <?php } ?>
+                </td>                
+            </tr>
+  
+            <?php foreach($this->submodule[$key] as $keysub=>$rowsub){ ?>
+                <tr>
+                   <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/arrow2.png"?>">&nbsp;
+                        <a href="<?=$this->baseUrl()?>/<?=$row['module']->module_name?>/<?=$rowsub['module_name']?>">
+                            <?=$rowsub['module_name']?>
+                        </a>
+                   </td>
+                   <td colspan="4"><?=$rowsub['module_title']?></td>
+                </tr>
+            <?php } ?>     
+        <? } ?>        
+  </table>

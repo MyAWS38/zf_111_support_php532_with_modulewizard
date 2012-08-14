@@ -1,0 +1,32 @@
+<form action="<?=$this->baseUrl()?>/auth/authenticate" method="post">
+    <table>
+        <tr>
+            <td>Username </td>
+            <td> : </td>     
+            <td> <input type="text" name="username" size="25" maxlength="40"
+                    onfocus="this.style.backgroundColor='yellow'"
+                    onblur="this.style.backgroundColor=''"
+                    /> </td>
+        </tr>
+        <tr>
+            <td>Password </td>
+            <td> : </td>     
+            <td> <input type="password" name="password" size="25" maxlength="40"
+                   onfocus="this.style.backgroundColor='yellow'"
+                    onblur="this.style.backgroundColor=''"    /> </td>
+        </tr>
+        
+      <tr>
+	<td>
+    </td>
+    <td>
+    </td>
+    <td>
+    	<input id="submit" type="submit" value="Log In">
+    </td>
+</tr>
+            
+    </table>
+</form>
+
+<?=$this->message?>

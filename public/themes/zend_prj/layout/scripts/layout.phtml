@@ -1,0 +1,110 @@
+<?php if ( ! defined('PUBLIC_PATH')) exit('No direct script access allowed');  ?>
+<?= $this->doctype('HTML5') ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+   <?php
+      echo $this->headTitle();
+      
+      $this->headLink()->appendStylesheet($this->baseUrl().'/themes/'.Zend_Registry::get('theme').'/css/menu.css');
+      $this->headLink()->appendStylesheet($this->baseUrl().'/themes/'.Zend_Registry::get('theme').'/css/global.css');
+      echo $this->headLink();      
+   ?>
+   
+   <script src="<?=$this->baseUrl().'/themes/'.Zend_Registry::get('theme').'/js/jquery-1.3.2.js'?>"></script>
+   <script type="text/javascript">
+      var base_url = '<?=$this->baseUrl()?>';
+      var theme = '<?=Zend_Registry::get('theme')?>';
+      var browser = '<?=Zend_Registry::get('browser')?>';
+   </script>
+
+   <script src="<?=$this->baseUrl().'/themes/'.Zend_Registry::get('theme').'/js/helper.js'?>"></script>
+   <script src="<?=$this->baseUrl().'/themes/'.Zend_Registry::get('theme').'/js/menu.js'?>"></script>
+   
+   <!--[if lte IE 7]>
+      <style type="text/css">
+            html .jqueryslidemenu{height: 1%;} /*Holly Hack for IE7 and below*/
+      </style>
+   <![endif]-->   
+   
+   <link REL="shortcut icon" HREF="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/favicon.ico" type="image/x-icon">      
+</head> 
+
+<body>
+<div id="slidemenu" class="jqueryslidemenu">
+  <ul>
+        <li> <a href="<?=$this->baseUrl()?>/"> Home </a> </li>
+        <?php $parentgroup = $this->modpriv->getParentModGroups($this->sesi->sesiUser);
+            $groupredu = "";
+              foreach($parentgroup as $key=>$rowparent){
+               if ($groupredu!=$rowparent['groupmodule_name']){
+                  
+                 $childone = $this->modpriv->getChildOne($rowparent['groupmodule_id'], $this->sesi->sesiUser);
+                    if (!empty($childone)){
+                     
+                     ?>
+         <li> <a href="javascript:void(0);">
+                     <?php echo $rowparent['groupmodule_name'] ; ?>
+               </a>
+               <ul>
+               <?php foreach($childone as $keychild=>$rowchild){
+                     $childtwo = $this->modpriv->getChildTwo($rowchild['module_id'], $this->sesi->sesiUser);  ?>
+                 <li> <a href="<?=(empty($childtwo)) ? $this->baseUrl()."/".$rowchild['module_name'] : "javascript:void(0);"?>">
+                   <?=  $rowchild['module_title'] ?>                            
+                   </a>
+                    <?php if (!empty($childtwo)){ ?>
+                       <ul>
+                       <?php foreach($childtwo as $keychildtwo=>$rowchildtwo){ ?>
+                        <li> <a href="<?=$this->baseUrl()."/".$rowchild['module_name']."/".$rowchildtwo['module_name']?>">
+                                 <?=  $rowchildtwo['module_title'] ?>
+                              </a>
+                        </li>
+                       <?php } ?>
+                       </ul>
+                    <?php } ?>           
+                 </li>
+                 <?php } ?>
+               </ul>               
+               <?php } ?>
+               
+               <?php $childofsub = $this->modules->getSubModule($rowparent['module_id']); if ( (empty($childone)) && (count($childofsub)>0) ) { ?>
+               <ul>
+                    <?php foreach($childofsub as $keysub=>$rowsub){ ?>
+                    <li> <a href="<?=$this->baseUrl()."/".$rowparent['module_name']."/".$rowsub['module_name']?>">
+                      <?=  $rowsub['module_title'] ?>
+                      </a> </li>
+                    <?php } ?>
+               </ul>
+               <?php  } ?>               
+        </li>
+        <?php }  $groupredu = $rowparent['groupmodule_name'];  } ?>
+       
+       <!-- no group -->
+       <?php $groupNogroup =  $this->modpriv->getParentModNoGroups($this->sesi->sesiUser);
+             foreach($groupNogroup as $key=>$row){ 
+       ?>
+       <li> <a href="<?=$this->baseUrl()."/".$row['module_name']?>">
+                      <?=  ucfirst($row['module_title']) ?>
+            </a>
+       </li>
+       <?php } ?>
+       <!-- end no group -->
+       
+               
+        <li><a href="<?php echo $this->baseUrl().'/auth/'.(( ! $this->sesi->sesiUser==null) ? 'logout'  : '') ; ?>">
+               <?php echo ( !$this->sesi->sesiUser == null ) ? 'Logout' : 'Login'; ?>
+            </a>
+        </li>
+       
+      </ul>
+  
+<br style="clear: left" />
+</div>
+
+   <HR>
+       <?= $this->layout()->content ?>
+   
+   <HR>
+</body>
+</html>

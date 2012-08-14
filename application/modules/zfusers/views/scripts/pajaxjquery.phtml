@@ -1,0 +1,47 @@
+<!--
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+-->
+<?php
+   $params = ($_SERVER['REQUEST_URI']!=$this->baseUrl()) ? str_replace($this->baseUrl()."/","",$_SERVER['REQUEST_URI']) : $_SERVER['REQUEST_URI'] ; 
+	      $params = explode("?",$params);
+            
+	    if (empty($params[1])) $get = ""; else $get = "?".$params[1];
+?>
+
+<?php if ($this->pageCount): ?>
+<div class="paginationControl">
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+  <a  href="javascript:void(0);" onmouseover="this.style.cursor='pointer'" onclick="ajaxLoadContent('<?= $this->url(array('page' => 1)).$get; ?>','content_update_ajax');">First</a> &#8226; 
+  <a href="javascript:void(0);" onmouseover="this.style.cursor='pointer'" onclick="ajaxLoadContent('<?= $this->url(array('page' => $this->previous)).$get; ?>','content_update_ajax');">Prev
+
+  </a> &#8226;
+<?php else: ?>
+    <!--  <img src="<?=$this->baseUrl()?>/img/ikon_sidkab/1/backward.gif" border="no"> -->
+<?php endif; ?>
+
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+  <a href="javascript:void(0);" onmouseover="this.style.cursor='pointer'"
+     onclick="ajaxLoadContent('<?= $this->url(array('page' => $page)).$get; ?>','content_update_ajax');">
+        <?= $page; ?>
+    </a> &#8226;
+  <?php else: ?>
+    <b><i><?= $page; ?></i></b> &#8226;
+  <?php endif; ?>
+<?php endforeach; ?>
+
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+  <a onmouseover="this.style.cursor='pointer'" onclick="ajaxLoadContent('<?= $this->url(array('page' => $this->next)).$get; ?>','content_update_ajax');" href="javascript:void(0);">Next
+     
+  </a> &#8226; 
+  <a onmouseover="this.style.cursor='pointer'" onclick="ajaxLoadContent('<?= $this->url(array('page' => $this->pageCount)).$get; ?>','content_update_ajax');" href="javascript:void(0);">Last
+    
+  </a>
+<?php else: ?>
+  <!-- <span class="disabled">Selanjutnya &gt;</span> -->
+<?php endif; ?>
+</div>
+<?php endif; ?>

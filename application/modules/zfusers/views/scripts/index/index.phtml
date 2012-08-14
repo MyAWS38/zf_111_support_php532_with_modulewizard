@@ -1,0 +1,23 @@
+<script type="text/javascript" src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/js/modules/zfusers.js"></script>
+<fieldset>
+    Choose Group User :
+    <select name="role_id" id="role_id">
+        <?php foreach($this->guser as $key=>$row){ ?>
+            <option value="<?=$row->role_id?>"><?=$row->role_name?></option>
+        <?php } ?>
+    </select> 
+    <input type="button"
+           onmouseover="this.style.cursor='pointer'"
+           onclick="loaddata();" id="Load" name="Load"
+           value="Load"/>
+    
+     <input type="button"
+           onmouseover="this.style.cursor='pointer'"
+           onclick="location='<?=$this->baseUrl()?>/zfusers/index/guser'" id="listrole" name="listrole"
+           value="List Role"/>   
+    
+    <span class="process"></span>
+</fieldset>
+<?=$this->message?>
+<input type="button" value="Add User" onclick="addusers();">
+<div id="loader"></div>

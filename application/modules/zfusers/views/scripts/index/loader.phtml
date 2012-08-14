@@ -1,0 +1,101 @@
+<?= (!empty($this->viewusers)) ? $this->paginationControl($this->viewusers, 'Sliding', 'pajaxjquery.phtml') : "";?>
+<table border=1 width="100%">
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Info</th>
+            <th>Is Active</th>
+            <th>Choices</th>    
+        </tr>
+        
+        <tr class="usersadd" style="display:none;">
+                  <td>
+                       <input type="hidden" name="role_id" class="role_id" value="<?=$this->role?>"/> 
+                       <input type="text" name="user_name_add" id="user_name_add"/>                
+                  </td>          
+                  <td>
+                       <input type="text" name="passwd_add" id="passwd_add"/> 
+                  </td>
+                  <td>
+                        <input type="text" name="information_add" id="information_add"/> 
+                  </td>
+                  <td>
+                       <input type="checkbox" name="is_active_add" value="1"/>   
+                  </td>                  
+                  <td>
+                           <!-- save -->
+                                <a onclick="savedata();" href="javascript:void(0);">
+                                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/save.gif" style="border:0px;"/>
+                                </a>    
+                                    |                    
+                                <!-- cancel -->
+                                <a onclick="canceladd();" href="javascript:void(0);">
+                                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/cancel.png" style="border:0px;"/>
+                                </a>
+                  </td>
+                </tr>
+        <?php foreach($this->viewusers as $key=>$row){ ?>
+                <tr class="usershide_<?=$key?>" style="display:none;">
+                        <input type="hidden" name="user_id_<?=$key?>" class="user_id_<?=$key?>" value="<?=$row->user_id?>"/>
+                        <td>
+                            <input type="text" name="user_name_<?=$key?>" value="<?=$row->user_name?>" class="user_name_<?=$key?>"/>                     
+                        </td>
+                        
+                        <td>
+                            <input type="password" name="passwd_<?=$key?>" value="" class="passwd_<?=$key?>"/>    
+                        </td>
+                        
+                        <td>
+                            &nbsp;    <input type="text" name="information_<?=$key?>" class="information_<?=$key?>" value="<?=$row->information?>"/> 
+                        </td>
+                        
+                        <td>
+                                <input type="checkbox" name="is_active_<?=$key?>" value="1" <?php if ($row->is_active==1){ echo "checked"; } ?>/>   
+                        </td>
+                        
+                        <td>       
+                                <!-- update -->
+                                <a onclick="updatedata('<?=$key?>');" href="javascript:void(0);">
+                                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/save.gif" style="border:0px;"/>
+                                </a>    
+                                    |                    
+                                <!-- cancel -->
+                                <a onclick="cancel('<?=$key?>');" href="javascript:void(0);">
+                                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/cancel.png" style="border:0px;"/>
+                                </a>
+                        </td>          
+                </tr>        
+        
+        <tr class="users_<?=$key?>">
+           <td><?=$row->user_name?></td>
+           <td>Hidden</td>
+           <td><?=$row->information?></td>
+           <td> <?php if ($row->is_active==1){ ?>
+                     <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/active.gif" style="border:0px;"/>   
+                <?php } else { ?>
+                     <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/non-active.gif" style="border:0px;"/>   
+                <?php } ?>
+           </td>
+           <td align="center">
+                <?php if ($this->sesi->sesiUser!=$row->user_name){ ?>
+                        <!-- Edit -->
+                        <a onclick="showedit('<?=$key?>');" href="javascript:void(0);">
+                            <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/application_edit.png"
+                                        style="border:0px;"/>
+                        </a>    
+                        |                    
+                        <!-- Delete -->
+                        <a onclick="confirmdelete('<?=$row->user_id?>');" href="javascript:void(0);">
+                            <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/Delete_24x24.png"
+                                        style="border:0px;"/>
+                        </a>
+                <?php } else { ?>
+                   <img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/user.png"?>"
+                            title="User already login" onmouseover="this.style.cursor='pointer'"/>
+                <?php } ?>
+            </td>
+        </tr>
+        <?php } ?>
+        
+</table>
+        

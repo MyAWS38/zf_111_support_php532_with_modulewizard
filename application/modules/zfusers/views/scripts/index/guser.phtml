@@ -1,0 +1,77 @@
+<script type="text/javascript" src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/js/modules/zfroles.js"></script>
+
+<input type="button" name="Add Role" value="Add Role" class="addrole" onclick="addrole();"/>
+<?php echo $this->message; ?>
+<table border=1>
+    <tr>
+           <td>Role</td>
+           <td>Choices</td>
+    </tr>
+    
+    <?php foreach($this->guser as $key=>$row){ ?>
+    
+    <form class="frmup_<?=$key?>"  name="frmup_<?=$key?>" method="post" action="<?=$this->baseUrl()?>/zfusers/index/updaterole">
+        <input type="hidden" name="role_id" value="<?=$row->role_id?>"/>
+    <tr class="rolehide_<?=$key?>" style="display:none;">
+        <td>
+            <input type="text" name="role_name" value="<?=$row->role_name?>"/>
+        </td>
+        <td>
+         <?php if ($this->role==$row->role_id){ } else{ ?>
+            <!-- update -->
+            <a onclick="document.forms['frmup_<?=$key?>'].submit();" href="javascript:void(0);">
+                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/save.gif" style="border:0px;"/>
+            </a>    
+                    |                    
+            <!-- cancel -->
+            <a onclick="cancel('<?=$key?>');" href="javascript:void(0);">
+                <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/cancel.png" style="border:0px;"/>
+            </a>
+           <?php } ?>
+        </td>
+        
+    </tr>
+    </form>
+    
+     <tr class="role_<?=$key?>">
+        <td><?=$row->role_name?></td>
+        <td align="center">
+            <?php if ($this->role==$row->role_id){ ?>
+                   <img src="<?=$this->baseUrl()."/themes/".Zend_Registry::get('theme')."/img/icons/user.png"?>"
+                            title="User already login" onmouseover="this.style.cursor='pointer'"/>
+            <?php } else{ ?>
+
+                <!-- Edit -->
+                <a onclick="showedit('<?=$key?>');" href="javascript:void(0);">
+                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/application_edit.png" style="border:0px;"/>
+                </a>    
+                    |                    
+                <!-- Delete -->
+                <a onclick="confirmdelete('<?=$row->role_id?>');" href="javascript:void(0);">
+                    <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/Delete_24x24.png" style="border:0px;"/>
+                </a>
+            <?php } ?>
+        </td>
+     </tr>
+    <?php } ?>
+    
+   <form class="frmadd"  name="frmadd" method="post" action="<?=$this->baseUrl()?>/zfusers/index/saverole">
+    <tr class="roleadd" style="display:none;">
+        <td><input type="text" name="role_name"></td>
+        <td>
+             <?php if ($this->role==$row->role_id){ ?>
+                
+            <?php } else{ ?>
+            <a onclick="document.forms['frmadd'].submit();" href="javascript:void(0);">
+                <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/save.gif" style="border:0px;"/>
+            </a>
+            |
+            <a onclick="canceladd();" href="javascript:void(0);">
+                <img src="<?=$this->baseUrl()?>/themes/<?=Zend_Registry::get('theme')?>/img/icons/cancel.png" style="border:0px;">
+            </a>
+            <?php } ?>
+        </td>
+    </tr>
+   </form>
+   
+</table>
