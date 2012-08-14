@@ -1,1 +1,1 @@
-git push githubzfwizard
+git push -u origin master
