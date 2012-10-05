@@ -16,9 +16,5 @@
     "require": {
         "php": ">=5.3.0"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.00Beta3"
-        }
-    }
+    "packages-dev" : "1.00beta3"
 }
